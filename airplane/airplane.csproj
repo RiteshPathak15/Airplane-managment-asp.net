@@ -70,12 +70,9 @@
     <Content Include="Allslection.css" />
     <Content Include="BookingConfirmation.aspx" />
     <Content Include="CancelBooking.aspx" />
-    <Content Include="FlightSelection.css" />
     <Content Include="Home.aspx" />
     <Content Include="images\airplane.png" />
-    <Content Include="FlightBooking.css" />
     <Content Include="Login.aspx" />
-    <Content Include="loginform.css" />
     <Content Include="Register.aspx" />
     <Content Include="Web.config" />
     <Content Include="FlightBooking.aspx" />
