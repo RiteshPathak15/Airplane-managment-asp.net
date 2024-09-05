@@ -270,43 +270,150 @@ p a:hover {
     }
 
 /* Common Styles for Both Sections */
-.about-us-section {
-    padding: 20px;
-}
-
-.about-us-content {
+/* General Section Styling */
+.about-us-section, .contact-section {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    align-items: flex-start;
+    padding: 50px;
+    background-color: #edf2fa;
+    color: #333;
+    margin-bottom: 50px;
+    border-radius: 10px;
 }
 
-.about-us-text {
-    flex: 1;
+h2 {
+    color: #FF69B4; /* Pink Title color */
+    font-size: 32px;
+    margin-bottom: 20px;
 }
+
+
+/* About Us Section */
+.about-us-section .about-us-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.about-us-section{
+    display:flex;
+    flex-direction:column;
+}
+.about-us-text {
+    width: 60%;
+    font-size: 18px;
+}
+
+    .about-us-text h3 {
+        font-size: 24px;
+        margin-top: 20px;
+        color: #FFC0CB; /* Lighter Pink for sub-headings */
+    }
+
+    .about-us-text ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+        .about-us-text ul li {
+            margin-bottom: 10px;
+        }
 
 .about-us-image-container {
-    flex: 1;
-    text-align: right;
+    width: 35%;
 }
 
 .about-us-image {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Contact Us Section */
+.contact-section {
+    justify-content: space-between;
+    padding: 50px;
 }
 
-.contact-us-section {
-    text-align: center;
-    padding: 50px 20px; /* More padding for a spacious look */
-    background-color: #f9f9f9; /* Light background color for contrast */
-    margin: 40px auto; /* More margin to separate sections from other content */
-    max-width: 800px; /* Consistent width */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    border-radius: 12px; /* Rounded corners */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on hover */
+.contact-form {
+    width: 60%;
 }
+
+    .contact-form h2 {
+        font-size: 32px;
+        color: #FF69B4;
+    }
+
+    .contact-form p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+.form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+    .form-fields .large-text {
+        grid-column: span 2;
+    }
+
+.input-text {
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    width: 85%;
+}
+
+    .input-text.large-text {
+        height: 100px;
+        resize: none;
+    }
+
+.submit-button {
+    background-color: #FF69B4;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+    .submit-button:hover {
+        background-color: #FFC0CB;
+    }
+
+.contact-info {
+    width: 35%;
+}
+
+    .contact-info h2, .contact-info h3 {
+        font-size: 24px;
+        color: #FF69B4;
+    }
+
+    .contact-info p {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+        /* Social Media Links */
+        .contact-info p:last-of-type {
+            display: flex;
+            gap: 20px;
+        }
+
+            .contact-info p:last-of-type a {
+                color: #FFC0CB;
+                text-decoration: none;
+                font-size: 18px;
+            }
+
+                .contact-info p:last-of-type a:hover {
+                    color: #FF69B4;
+                }
 
     /* Hover Effect for Sections */
     .about-us-section:hover, .contact-us-section:hover {

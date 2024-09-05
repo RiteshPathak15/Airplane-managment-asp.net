@@ -5,33 +5,44 @@ namespace airplane
 {
     public partial class FlightBooking : Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            // Any page load logic here, if needed.
-        }
-
+        // Event handler for the "Search Flights" button
         protected void SearchFlights_Click(object sender, EventArgs e)
         {
-            // Code to handle search button click event.
-            string departureCity = txtDepartureCity.Text;
-            string destinationCity = txtDestinationCity.Text;
+            // Fetch input values from the form
+            string departureCity = txtDepartureCity.SelectedValue;
+            string destinationCity = txtDestinationCity.SelectedValue;
             string date = txtDate.Text;
-            Response.Redirect("~/FlightSelection.aspx");
 
-            // You can add your logic to process the search here.
-            // For example, you might store the values in session variables, query a database, etc.
+            // Validate if the inputs are provided
+            if (string.IsNullOrEmpty(departureCity) || string.IsNullOrEmpty(destinationCity) || string.IsNullOrEmpty(date))
+            {
+                // Handle invalid inputs (you can show a message or handle this as needed)
+                Response.Write("<script>alert('Please fill in all fields.');</script>");
+                return;
+            }
+
+            // Perform flight search logic here
+            // For demonstration, we’ll just redirect to a "Search Results" page
+            Response.Redirect($"SearchResults.aspx?departureCity={departureCity}&destinationCity={destinationCity}&date={date}");
         }
 
+        // Event handler for the "Cancel Booking" button
         protected void CancelBooking_Click(object sender, EventArgs e)
         {
-            // Code to handle the cancel booking button click event.
+            // Fetch the booking reference input
             string bookingReference = txtBookingReference.Text;
 
-            // Add logic to process the cancellation here.
-            // For example, validate the booking reference, remove the booking from the database, etc.
+            // Validate if the booking reference is provided
+            if (string.IsNullOrEmpty(bookingReference))
+            {
+                // Handle invalid input (you can show a message or handle this as needed)
+                Response.Write("<script>alert('Please provide a booking reference.');</script>");
+                return;
+            }
 
-            // Redirect or provide feedback to the user.
-            Response.Redirect("~/CancelBooking.aspx");
+            // Perform booking cancellation logic here
+            // For demonstration, we’ll just redirect to a cancellation confirmation page
+            Response.Redirect($"CancelConfirmation.aspx?bookingReference={bookingReference}");
         }
     }
 }

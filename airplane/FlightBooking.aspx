@@ -45,7 +45,7 @@
                     <asp:ListItem>Paris</asp:ListItem>
                     <asp:ListItem>London</asp:ListItem>
                 </asp:DropDownList>
-                <asp:TextBox ID="txtDate" runat="server" Placeholder="mm/dd/yyyy" CssClass="input-text"></asp:TextBox>
+                <asp:TextBox ID="txtDate" runat="server" Placeholder="mm/dd/yyyy" CssClass="input-text" TextMode="Date"></asp:TextBox>
                 <asp:Button ID="btnSearchFlights" runat="server" Text="Search Flights" CssClass="search-button" OnClick="SearchFlights_Click" />
             </div>
         </div>
@@ -118,10 +118,7 @@
             </div>
         </div>
 
-        <!-- About Us Section -->
-        <!-- About Us Section -->
-<!-- About Us Section -->
-<!-- About Us Section -->
+    <!-- About Us Section -->
 <div id="aboutUsSection" class="about-us-section">
     <h2>About Us</h2>
     <div class="about-us-content">
@@ -147,15 +144,32 @@
     </div>
 </div>
 
-
-
-        <!-- Contact Us Section -->
-        <div id="contactUsSection" class="contact-us-section">
-            <h2>Contact Us</h2>
-            <p>If you have any questions or need assistance, please contact us at:</p>
-            <p>Email: support@flightbooking.com</p>
-            <p>Phone: +1 234 567 8900</p>
+<!-- Contact Us Section -->
+<div id="contactUsSection" class="contact-section">
+    <div class="contact-form">
+        <h2>Just say Hello!</h2>
+        <p>Let us know more about you!</p>
+        <div class="form-fields">
+            <asp:TextBox ID="txtFirstName" runat="server" CssClass="input-text" Placeholder="First Name"></asp:TextBox>
+            <asp:TextBox ID="txtLastName" runat="server" CssClass="input-text" Placeholder="Last Name"></asp:TextBox>
+            <asp:TextBox ID="txtEmail" runat="server" CssClass="input-text" Placeholder="Mail"></asp:TextBox>
+            <asp:TextBox ID="txtPhone" runat="server" CssClass="input-text" Placeholder="Phone"></asp:TextBox>
+            <asp:TextBox ID="txtMessage" runat="server" CssClass="input-text large-text" TextMode="MultiLine" Placeholder="Message"></asp:TextBox>
+            <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="submit-button" />
         </div>
+    </div>
+
+    <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p>77 Baker Street<br>Bandskowu, 07095<br>Indonesia</p>
+        <p>Call Us: +62 81 334 61 09</p>
+        <p>We are open from Monday - Friday<br>08:00 am - 05:00 pm</p>
+
+        <h3>Follow Us</h3>
+        <p>facebook &nbsp; instagram &nbsp; vimeo</p>
+    </div>
+</div>
+
     </form>
 </body>
 </html>
