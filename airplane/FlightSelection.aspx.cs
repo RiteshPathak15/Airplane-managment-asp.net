@@ -7,6 +7,7 @@ namespace airplane
 {
     public partial class FlightSelection : System.Web.UI.Page
     {
+
         // Flight class to hold flight information
         public class Flight
         {
@@ -43,17 +44,21 @@ namespace airplane
             // Retrieve the entered coupon code
             string couponCode = txtCouponCode.Text.Trim();
 
-           
+
         }
 
-        protected void btnConfirmBooking_Click(object sender, EventArgs e)
-        {
-            // Retrieve the entered coupon code (if needed)
-            string couponCode = txtCouponCode.Text.Trim();
+       protected void btnConfirmBooking_Click(object sender, EventArgs e)
+{
+    // Retrieve the entered coupon code (if needed)
+    string couponCode = txtCouponCode.Text.Trim();
+
+    // Perform booking confirmation logic here
+    // For example, save the booking to the database
+
+    // Register a JavaScript alert
+    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Your booking has been confirmed! Thank you.');", true);
+}
 
 
-            // Show a confirmation message or redirect to another page
-            Response.Redirect("~/BookingConfirmation.aspx");
-        }
     }
 }

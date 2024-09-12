@@ -31,54 +31,42 @@
 
     <div class="container">
         <h2>Booking Confirmation</h2>
-        <div class="booking-details">
-            <p><strong>Booking Number:</strong>
-                <asp:Label ID="BookingNumberLabel" runat="server" /></p>
-            <p><strong>Flight:</strong>
-                <asp:Label ID="FlightDetailsLabel" runat="server" /></p>
-            <p><strong>Seat:</strong>
-                <asp:Label ID="SeatNumberLabel" runat="server" /></p>
-            <p><strong>Passenger:</strong>
-                <asp:Label ID="PassengerNameLabel" runat="server" /></p>
-            <p><strong>Date:</strong>
-                <asp:Label ID="BookingDateLabel" runat="server" /></p>
-        </div>
+        <form id="form1" runat="server">
+            <div class="confirmation-details">
+                <asp:Label ID="lblDepartureCity" runat="server" CssClass="details-label" /><br /><br />
+                <asp:Label ID="lblDestinationCity" runat="server" CssClass="details-label" /><br /><br />
+                <asp:Label ID="lblDate" runat="server" CssClass="details-label" /><br /><br />
+                <asp:Label ID="lblCurrentSeat" runat="server" CssClass="details-label" /><br /><br />
+            </div>
 
-        <div class="update-section">
-            <h3>Update Your Booking</h3>
-            <form id="updateForm" runat="server">
+            <div class="update-section">
+                <h3>Update Your Booking</h3>
                 <div>
-                    <asp:Label ID="lblSelectNewFlight" runat="server" Text="Select New Flight"></asp:Label>
-                    <asp:DropDownList ID="NewFlightDropdown" runat="server" CssClass="form-control">
-                        <asp:ListItem Text="Alternate flight you can take" Value="" />
-                    </asp:DropDownList>
-                </div>
-                <div>
-                    <asp:Label ID="lblSelectNewSeat" runat="server" Text="Select New Seat"></asp:Label>
+                    <asp:Label ID="lblSelectNewSeat" runat="server" Text="Select New Seat" CssClass="form-label"></asp:Label>
                     <asp:DropDownList ID="NewSeatDropdown" runat="server" CssClass="form-control">
-                        <asp:ListItem Text="Seat availability" Value="" />
+                        <asp:ListItem Text="Select a seat" Value="" />
                     </asp:DropDownList>
                 </div>
                 <asp:Button ID="ConfirmBookingButton" runat="server" Text="Confirm Booking" CssClass="btn btn-primary" OnClick="ConfirmBookingButton_Click" /><br />
                 <br />
                 <asp:Button ID="UpdateBookingButton" runat="server" Text="Update" CssClass="btn btn-primary" OnClientClick="return confirmUpdate();" OnClick="UpdateBookingButton_Click" /><br />
                 <br />
-            </form>
-        </div>
+            </div>
 
-        <!-- Message Label -->
-        <div class="message-section">
-            <asp:Label ID="MessageLabel" runat="server" CssClass="message-label" />
-        </div>
-        <br />
-        <br />
+            <!-- Message Label -->
+            <div class="message-section">
+                <asp:Label ID="MessageLabel" runat="server" CssClass="message-label" />
+            </div>
+            <br />
+            <br />
 
-        <!-- Table Section -->
-        <div class="table-section">
-            <asp:Panel ID="TablePanel" runat="server" Visible="false">
-                <!-- Table will be dynamically added here -->
-            </asp:Panel>
-        </div>
+            <!-- Table Section -->
+            <div class="table-section">
+                <asp:Panel ID="TablePanel" runat="server" Visible="false">
+                    <!-- Table will be dynamically added here -->
+                </asp:Panel>
+            </div>
+        </form>
     </div>
 </body>
 </html>

@@ -25,42 +25,57 @@
             <asp:HyperLink ID="lnkSignIn" runat="server" NavigateUrl="Login.aspx">SignIn</asp:HyperLink>
         </nav>
 
-
         <div class="main-content">
             <h1>Flight Ticket Booking</h1>
             <div class="booking-form">
                 <asp:DropDownList ID="txtDepartureCity" runat="server" CssClass="input-text">
                     <asp:ListItem Value="">Type Departure City</asp:ListItem>
-                    <asp:ListItem>New Delhi </asp:ListItem>
-                    <asp:ListItem>Greater Noida</asp:ListItem>
-                    <asp:ListItem>NewYork</asp:ListItem>
-                    <asp:ListItem>Paris</asp:ListItem>
-                    <asp:ListItem>London</asp:ListItem>
+                    <asp:ListItem Text="New York" Value="New York"></asp:ListItem>
+                    <asp:ListItem Text="Los Angeles" Value="Los Angeles"></asp:ListItem>
+                    <asp:ListItem Text="New Delhi" Value="New Delhi"></asp:ListItem>
                 </asp:DropDownList>
                 <asp:DropDownList ID="txtDestinationCity" runat="server" CssClass="input-text">
                     <asp:ListItem Value="">Type Destination City</asp:ListItem>
-                    <asp:ListItem>New Delhi </asp:ListItem>
-                    <asp:ListItem>Greater Noida</asp:ListItem>
-                    <asp:ListItem>NewYork</asp:ListItem>
-                    <asp:ListItem>Paris</asp:ListItem>
-                    <asp:ListItem>London</asp:ListItem>
+                    <asp:ListItem Text="New York" Value="New York"></asp:ListItem>
+                    <asp:ListItem Text="Los Angeles" Value="Los Angeles"></asp:ListItem>
+                    <asp:ListItem Text="New Delhi" Value="New Delhi"></asp:ListItem>
                 </asp:DropDownList>
                 <asp:TextBox ID="txtDate" runat="server" Placeholder="mm/dd/yyyy" CssClass="input-text" TextMode="Date"></asp:TextBox>
                 <asp:Button ID="btnSearchFlights" runat="server" Text="Search Flights" CssClass="search-button" OnClick="SearchFlights_Click" />
-            </div>
+            </div><br /><br />
+
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Flight_Id" DataSourceID="SqlDataSource1">
+                <Columns>
+                    <asp:BoundField DataField="Flight_Id" HeaderText="Flight Id" ReadOnly="True" SortExpression="Flight_Id" />
+                    <asp:BoundField DataField="Airplane_Name" HeaderText="Airplane Name" SortExpression="Airplane_Name" />
+                    <asp:BoundField DataField="DepatureCity" HeaderText="Departure City" SortExpression="DepatureCity" />
+                    <asp:BoundField DataField="DestinationCity" HeaderText="Destination City" SortExpression="DestinationCity" />
+                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+                </Columns>
+            </asp:GridView>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:airplane_listConnectionString2 %>" 
+                SelectCommand="SELECT * FROM [airlist] WHERE ([DepatureCity] = @DepatureCity AND [DestinationCity] = @DestinationCity)">
+                <SelectParameters>
+                    <asp:ControlParameter ControlID="txtDepartureCity" Name="DepatureCity" PropertyName="SelectedValue" Type="String" />
+                    <asp:ControlParameter ControlID="txtDestinationCity" Name="DestinationCity" PropertyName="SelectedValue" Type="String" />
+                </SelectParameters>
+            </asp:SqlDataSource><br /><br />
+
+            <!-- Add Confirm Booking Button -->
+            <asp:Button ID="btnConfirmBooking" runat="server" Text="Confirm Booking" CssClass="confirm-button" OnClick="ConfirmBooking_Click" />
         </div>
 
         <!-- Enhanced Airplane Card Section -->
-      <div class="airplane-card">
-    <div class="card-content">
-        <h2 class="card-title">Special Offers on Flights!</h2>
-        <p class="card-description">Book now to enjoy exclusive discounts on your next journey. Limited time offer!</p>
-        <asp:Button ID="btnExploreOffers" runat="server" Text="Explore Offers" CssClass="explore-offers-button" />
-    </div>
-    <div class="card-image">
-        <asp:Image ID="Image2" runat="server" ImageUrl="https://pilotinstitute.com/wp-content/uploads/2023/02/How-Much-Do-Airplanes-Cost.jpg" AlternateText="Flight" />
-    </div>
-</div>
+        <div class="airplane-card">
+            <div class="card-content">
+                <h2 class="card-title">Special Offers on Flights!</h2>
+                <p class="card-description">Book now to enjoy exclusive discounts on your next journey. Limited time offer!</p>
+                <asp:Button ID="btnExploreOffers" runat="server" Text="Explore Offers" CssClass="explore-offers-button" />
+            </div>
+            <div class="card-image">
+                <asp:Image ID="Image2" runat="server" ImageUrl="https://pilotinstitute.com/wp-content/uploads/2023/02/How-Much-Do-Airplanes-Cost.jpg" AlternateText="Flight" />
+            </div>
+        </div>
 
 
 
@@ -118,57 +133,64 @@
             </div>
         </div>
 
-    <!-- About Us Section -->
-<div id="aboutUsSection" class="about-us-section">
-    <h2>About Us</h2>
-    <div class="about-us-content">
-        <div class="about-us-text">
-            <p>At <strong>FlightConnect</strong>, we are passionate about connecting people to their destinations with ease and efficiency. Our platform offers a seamless flight booking experience, providing you with the best options from airlines worldwide. Whether you’re planning a business trip, a vacation, or a quick getaway, our extensive network ensures that you find the perfect flight at the best price.</p>
+        <!-- About Us Section -->
+        <div id="aboutUsSection" class="about-us-section">
+            <h2>About Us</h2>
+            <div class="about-us-content">
+                <div class="about-us-text">
+                    <p>At <strong>FlightConnect</strong>, we are passionate about connecting people to their destinations with ease and efficiency. Our platform offers a seamless flight booking experience, providing you with the best options from airlines worldwide. Whether you’re planning a business trip, a vacation, or a quick getaway, our extensive network ensures that you find the perfect flight at the best price.</p>
 
-            <h3>Our Mission</h3>
-            <p>We aim to make travel accessible to everyone by offering competitive prices, a user-friendly interface, and comprehensive customer support. From searching for flights to booking and managing your itinerary, we’re with you every step of the way.</p>
+                    <h3>Our Mission</h3>
+                    <p>We aim to make travel accessible to everyone by offering competitive prices, a user-friendly interface, and comprehensive customer support. From searching for flights to booking and managing your itinerary, we’re with you every step of the way.</p>
 
-            <h3>Why Choose Us?</h3>
-            <ul>
-                <li><strong>Comprehensive Search:</strong> Access flights from all major airlines globally.</li>
-                <li><strong>Competitive Prices:</strong> Enjoy exclusive discounts and special offers.</li>
-                <li><strong>Customer Support:</strong> Our dedicated team is here to assist you 24/7.</li>
-                <li><strong>Secure Transactions:</strong> We prioritize your safety with encrypted and secure payment gateways.</li>
-            </ul>
+                    <h3>Why Choose Us?</h3>
+                    <ul>
+                        <li><strong>Comprehensive Search:</strong> Access flights from all major airlines globally.</li>
+                        <li><strong>Competitive Prices:</strong> Enjoy exclusive discounts and special offers.</li>
+                        <li><strong>Customer Support:</strong> Our dedicated team is here to assist you 24/7.</li>
+                        <li><strong>Secure Transactions:</strong> We prioritize your safety with encrypted and secure payment gateways.</li>
+                    </ul>
 
-            <p>Whether you’re flying domestic or international, we strive to make your journey as smooth as possible. Trust FlightConnect to take care of your travel needs with professionalism and care.</p>
+                    <p>Whether you’re flying domestic or international, we strive to make your journey as smooth as possible. Trust FlightConnect to take care of your travel needs with professionalism and care.</p>
+                </div>
+                <div class="about-us-image-container">
+                    <asp:Image ID="aboutUsImage" runat="server" ImageUrl="https://m.media-amazon.com/images/I/715bAj9Ax3L._AC_UF1000,1000_QL80_.jpg" AlternateText="About Us Image" CssClass="about-us-image" />
+                </div>
+            </div>
         </div>
-        <div class="about-us-image-container">
-            <asp:Image ID="aboutUsImage" runat="server" ImageUrl="https://m.media-amazon.com/images/I/715bAj9Ax3L._AC_UF1000,1000_QL80_.jpg" AlternateText="About Us Image" CssClass="about-us-image" />
+
+        <!-- Contact Us Section -->
+        <div id="contactUsSection" class="contact-section">
+            <div class="contact-form">
+                <h2>Just say Hello!</h2>
+                <p>Let us know more about you!</p>
+                <div class="form-fields">
+                    <asp:TextBox ID="txtFirstName" runat="server" CssClass="input-text" Placeholder="First Name"></asp:TextBox>
+                    <asp:TextBox ID="txtLastName" runat="server" CssClass="input-text" Placeholder="Last Name"></asp:TextBox>
+                    <asp:TextBox ID="txtEmail" runat="server" CssClass="input-text" Placeholder="Mail"></asp:TextBox>
+                    <asp:TextBox ID="txtPhone" runat="server" CssClass="input-text" Placeholder="Phone"></asp:TextBox>
+                    <asp:TextBox ID="txtMessage" runat="server" CssClass="input-text large-text" TextMode="MultiLine" Placeholder="Message"></asp:TextBox>
+                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="submit-button" />
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <p>
+                    77 Baker Street<br>
+                    Bandskowu, 07095<br>
+                    Indonesia
+                </p>
+                <p>Call Us: +62 81 334 61 09</p>
+                <p>
+                    We are open from Monday - Friday<br>
+                    08:00 am - 05:00 pm
+                </p>
+
+                <h3>Follow Us</h3>
+                <p>facebook &nbsp; instagram &nbsp; vimeo</p>
+            </div>
         </div>
-    </div>
-</div>
-
-<!-- Contact Us Section -->
-<div id="contactUsSection" class="contact-section">
-    <div class="contact-form">
-        <h2>Just say Hello!</h2>
-        <p>Let us know more about you!</p>
-        <div class="form-fields">
-            <asp:TextBox ID="txtFirstName" runat="server" CssClass="input-text" Placeholder="First Name"></asp:TextBox>
-            <asp:TextBox ID="txtLastName" runat="server" CssClass="input-text" Placeholder="Last Name"></asp:TextBox>
-            <asp:TextBox ID="txtEmail" runat="server" CssClass="input-text" Placeholder="Mail"></asp:TextBox>
-            <asp:TextBox ID="txtPhone" runat="server" CssClass="input-text" Placeholder="Phone"></asp:TextBox>
-            <asp:TextBox ID="txtMessage" runat="server" CssClass="input-text large-text" TextMode="MultiLine" Placeholder="Message"></asp:TextBox>
-            <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="submit-button" />
-        </div>
-    </div>
-
-    <div class="contact-info">
-        <h2>Contact Information</h2>
-        <p>77 Baker Street<br>Bandskowu, 07095<br>Indonesia</p>
-        <p>Call Us: +62 81 334 61 09</p>
-        <p>We are open from Monday - Friday<br>08:00 am - 05:00 pm</p>
-
-        <h3>Follow Us</h3>
-        <p>facebook &nbsp; instagram &nbsp; vimeo</p>
-    </div>
-</div>
 
     </form>
 </body>

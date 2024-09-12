@@ -69,15 +69,12 @@
   <ItemGroup>
     <Content Include="Allslection.css" />
     <Content Include="BookingConfirmation.aspx" />
-    <Content Include="CancelBooking.aspx" />
-    <Content Include="Home.aspx" />
     <Content Include="images\airplane.png" />
     <Content Include="Login.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Web.config" />
     <Content Include="FlightBooking.aspx" />
     <Content Include="FlightSelection.aspx" />
-    <Content Include="UpdateBooking.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookingConfirmation.aspx.cs">
@@ -86,20 +83,6 @@
     </Compile>
     <Compile Include="BookingConfirmation.aspx.designer.cs">
       <DependentUpon>BookingConfirmation.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CancelBooking.aspx.cs">
-      <DependentUpon>CancelBooking.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CancelBooking.aspx.designer.cs">
-      <DependentUpon>CancelBooking.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Home.aspx.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Home.aspx.designer.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -129,13 +112,6 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateBooking.aspx.cs">
-      <DependentUpon>UpdateBooking.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UpdateBooking.aspx.designer.cs">
-      <DependentUpon>UpdateBooking.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -73,7 +73,8 @@
                 <asp:TextBox ID="txtCouponCode" runat="server" CssClass="input-text" placeholder="Enter Coupon Code"></asp:TextBox>
                 <asp:Button ID="btnApplyCoupon" runat="server" Text="Apply Coupon" CssClass="apply-coupon-button" />
                 <asp:Button ID="btnConfirmBooking" runat="server" Text="Confirm Booking" CssClass="confirm-booking-button" OnClick="btnConfirmBooking_Click" />
-            </div>
+            <asp:Label ID="MessageLabel" runat="server" CssClass="confirmation-message" Visible="false"></asp:Label>
+</div>
         </div>
 
     </form>
