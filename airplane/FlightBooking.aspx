@@ -42,27 +42,32 @@
                 </asp:DropDownList>
                 <asp:TextBox ID="txtDate" runat="server" Placeholder="mm/dd/yyyy" CssClass="input-text" TextMode="Date"></asp:TextBox>
                 <asp:Button ID="btnSearchFlights" runat="server" Text="Search Flights" CssClass="search-button" OnClick="SearchFlights_Click" />
-            </div><br /><br />
+            </div>
+            <br />
+            <br />
 
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Flight_Id" DataSourceID="SqlDataSource1">
+            <!-- Bind GridView manually from code-behind -->
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="FlightID" CssClass="flight-grid" OnRowCommand="GridView1_RowCommand">
                 <Columns>
-                    <asp:BoundField DataField="Flight_Id" HeaderText="Flight Id" ReadOnly="True" SortExpression="Flight_Id" />
-                    <asp:BoundField DataField="Airplane_Name" HeaderText="Airplane Name" SortExpression="Airplane_Name" />
-                    <asp:BoundField DataField="DepatureCity" HeaderText="Departure City" SortExpression="DepatureCity" />
-                    <asp:BoundField DataField="DestinationCity" HeaderText="Destination City" SortExpression="DestinationCity" />
-                    <asp:BoundField DataField="Price" HeaderText="Price" SortExpression="Price" />
+                    <asp:BoundField DataField="FlightID" HeaderText="Flight ID" ReadOnly="True" ItemStyle-CssClass="grid-cell flight-id" HeaderStyle-CssClass="grid-header flight-id-header" />
+                    <asp:BoundField DataField="FlightNumber" HeaderText="Flight Number" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="DepartureCity" HeaderText="Departure City" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="ArrivalCity" HeaderText="Arrival City" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="Date" HeaderText="Date" DataFormatString="{0:MM/dd/yyyy}" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="Duration" HeaderText="Duration" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="Price" HeaderText="Price" DataFormatString="{0:C}" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="Emissions" HeaderText="Emissions" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:BoundField DataField="ECash" HeaderText="eCash" DataFormatString="{0:C}" ItemStyle-CssClass="grid-cell" HeaderStyle-CssClass="grid-header" />
+                    <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:Button ID="btnConfirm" runat="server" CommandName="Confirm" CommandArgument='<%# Container.DataItemIndex %>' Text="Confirm" CssClass="btn confirm-btn" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:airplane_listConnectionString2 %>" 
-                SelectCommand="SELECT * FROM [airlist] WHERE ([DepatureCity] = @DepatureCity AND [DestinationCity] = @DestinationCity)">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="txtDepartureCity" Name="DepatureCity" PropertyName="SelectedValue" Type="String" />
-                    <asp:ControlParameter ControlID="txtDestinationCity" Name="DestinationCity" PropertyName="SelectedValue" Type="String" />
-                </SelectParameters>
-            </asp:SqlDataSource><br /><br />
 
-            <!-- Add Confirm Booking Button -->
-            <asp:Button ID="btnConfirmBooking" runat="server" Text="Confirm Booking" CssClass="confirm-button" OnClick="ConfirmBooking_Click" />
+
+
         </div>
 
         <!-- Enhanced Airplane Card Section -->
@@ -78,14 +83,8 @@
         </div>
 
 
-
-        <!-- New Cancel Booking Section -->
-        <div class="cancel-booking-section">
-            <h1>Cancel Booking</h1>
-            <div class="cancel-form">
-                <asp:TextBox ID="txtBookingReference" runat="server" Placeholder="Enter Booking Reference" CssClass="input-text"></asp:TextBox>
-                <asp:Button ID="btnCancelBooking" runat="server" Text="Cancel Booking" CssClass="cancel-button" OnClick="CancelBooking_Click" />
-            </div>
+            <!-- Message Label -->
+            <asp:Label ID="MessageLabel" runat="server" CssClass="message-label" />
         </div>
 
         <!-- Flight Details Section -->
@@ -170,7 +169,7 @@
                     <asp:TextBox ID="txtEmail" runat="server" CssClass="input-text" Placeholder="Mail"></asp:TextBox>
                     <asp:TextBox ID="txtPhone" runat="server" CssClass="input-text" Placeholder="Phone"></asp:TextBox>
                     <asp:TextBox ID="txtMessage" runat="server" CssClass="input-text large-text" TextMode="MultiLine" Placeholder="Message"></asp:TextBox>
-                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="submit-button" />
+                <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="submit-button" OnClick="btnSubmit_Click" />
                 </div>
             </div>
 

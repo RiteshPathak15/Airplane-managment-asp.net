@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
 
 namespace airplane
 {
@@ -16,6 +17,7 @@ namespace airplane
                 string destinationCity = Request.QueryString["destinationCity"];
                 string date = Request.QueryString["date"];
                 string currentSeat = Request.QueryString["seat"]; // Added for current seat
+                string flightID = Request.QueryString["flightID"]; // Added for flightID
 
                 // Check if the query string parameters are not null or empty
                 if (!string.IsNullOrEmpty(departureCity) && !string.IsNullOrEmpty(destinationCity) && !string.IsNullOrEmpty(date))
@@ -24,8 +26,6 @@ namespace airplane
                     lblDepartureCity.Text = "Departure City: " + departureCity;
                     lblDestinationCity.Text = "Destination City: " + destinationCity;
                     lblDate.Text = "Date: " + date;
-
-                    // Display the current seat
                     lblCurrentSeat.Text = "Current Seat: " + (string.IsNullOrEmpty(currentSeat) ? "Not assigned" : currentSeat);
 
                     // Populate the dropdown with available seats
@@ -53,38 +53,98 @@ namespace airplane
 
         protected void ConfirmBookingButton_Click(object sender, EventArgs e)
         {
-            // Save the booking details (in a real application, this would involve database operations)
+            // Retrieve booking details from query string or controls
             string departureCity = Request.QueryString["departureCity"];
             string destinationCity = Request.QueryString["destinationCity"];
             string date = Request.QueryString["date"];
-            string selectedSeat = lblCurrentSeat.Text.Replace("Current Seat: ", "");
+            string selectedSeat = lblCurrentSeat.Text.Replace("Current Seat: ", ""); // Make sure lblCurrentSeat is defined
+            string flightID = Request.QueryString["flightID"]; // Retrieve flightID from query string
 
-            SaveBooking(departureCity, destinationCity, date, selectedSeat);
+            try
+            {
+                // Ensure selectedSeat is not empty
+                if (!string.IsNullOrEmpty(selectedSeat) && !string.IsNullOrEmpty(flightID))
+                {
+                    // Save the booking details
+                    SaveBooking(departureCity, destinationCity, date, selectedSeat, flightID);
 
-    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Your booking has been confirmed! Thank you.');", true);
-
+                    // Redirect to FlightSelection page
+                    Response.Redirect("FlightSelection.aspx");
+                }
+                else
+                {
+                    MessageLabel.Text = "Please select a seat before confirming your booking.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the error as needed
+                MessageLabel.Text = "Error confirming booking: " + ex.Message;
+            }
         }
 
-        private void SaveBooking(string departureCity, string destinationCity, string date, string seat)
+        private void SaveBooking(string departureCity, string destinationCity, string date, string seat, string flightID)
         {
-            // Implement saving logic here
-            // For example, save to a database or session
+            // Retrieve the connection string from the web.config file
+            string connectionString = ConfigurationManager.ConnectionStrings["FlightBookingDB"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                // Prepare the SQL query to insert booking details
+                string insertQuery = "INSERT INTO ConfirmedBookings (FlightID, DepartureCity, DestinationCity, Date, Seat) " +
+                                     "VALUES (@FlightID, @DepartureCity, @DestinationCity, @Date, @Seat)";
+                SqlCommand command = new SqlCommand(insertQuery, connection);
+                command.Parameters.AddWithValue("@FlightID", flightID);
+                command.Parameters.AddWithValue("@DepartureCity", departureCity);
+                command.Parameters.AddWithValue("@DestinationCity", destinationCity);
+                command.Parameters.AddWithValue("@Date", date);
+                command.Parameters.AddWithValue("@Seat", seat);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
         protected void UpdateBookingButton_Click(object sender, EventArgs e)
         {
-            // Get the selected seat from the dropdown
             string newSeat = NewSeatDropdown.SelectedValue;
-            if (!string.IsNullOrEmpty(newSeat))
+            string flightID = Request.QueryString["flightID"]; // Ensure you have flightID in your query string
+
+            if (!string.IsNullOrEmpty(newSeat) && !string.IsNullOrEmpty(flightID))
             {
-                // Update the booking with the new seat (implement your update logic here)
-                // For demonstration, we’ll just update the label
-                lblCurrentSeat.Text = "Current Seat: " + newSeat;
-                MessageLabel.Text = "Booking updated with new seat: " + newSeat;
+                try
+                {
+                    // Update the flight with the new seat
+                    UpdateFlightSeat(flightID, newSeat);
+                    lblCurrentSeat.Text = "Current Seat: " + newSeat;
+                    MessageLabel.Text = "Booking updated with new seat: " + newSeat;
+                }
+                catch (Exception ex)
+                {
+                    // Log or handle the error as needed
+                    MessageLabel.Text = "Error updating booking: " + ex.Message;
+                }
             }
             else
             {
                 MessageLabel.Text = "Please select a seat to update.";
+            }
+        }
+
+        private void UpdateFlightSeat(string flightID, string newSeat)
+        {
+            // Retrieve the connection string from the web.config file
+            string connectionString = ConfigurationManager.ConnectionStrings["FlightBookingDB"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string updateQuery = "UPDATE Flights SET Seat = @NewSeat WHERE FlightID = @FlightID";
+                SqlCommand command = new SqlCommand(updateQuery, connection);
+                command.Parameters.AddWithValue("@NewSeat", newSeat);
+                command.Parameters.AddWithValue("@FlightID", flightID);
+
+                connection.Open();
+                command.ExecuteNonQuery();
             }
         }
     }

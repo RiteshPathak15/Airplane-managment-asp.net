@@ -129,7 +129,7 @@ p a:hover {
     background-color: white;
     border-radius: 8px;
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 800px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -180,6 +180,43 @@ p a:hover {
         .cancel-form .cancel-button:hover {
             background-color: #e60000; /* Darker red on hover */
         }
+
+/* AllSlection.css */
+
+/* Table Styling */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+    /* Button Styling */
+    .table .btn {
+        padding: 5px 10px;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+        .table .btn.cancel {
+            background-color: #f44336; /* Red */
+        }
+
+            .table .btn.cancel:hover {
+                background-color: #d32f2f; /* Darker Red */
+            }
+
 
 /* Booking Form */
 .booking-form {
@@ -442,6 +479,62 @@ h2 {
     }
 
 /* Flight Details Section */
+
+/* General GridView styles */
+
+.flight-grid {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+/* Header styles */
+.grid-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Cell styles */
+.grid-cell {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Row styles */
+.flight-grid tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.flight-grid tr:hover {
+    background-color: #ddd;
+}
+
+/* Button styles */
+.btn {
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.confirm-btn {
+    background-color: #4CAF50; /* Green */
+}
+
+    .confirm-btn:hover {
+        background-color: #45a049; /* Darker green */
+    }
+
 .flight-details-container {
     display: flex;
     flex-wrap: wrap;

@@ -1,64 +1,77 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls; // Add this namespace
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.UI.WebControls;
 
 namespace airplane
 {
     public partial class FlightSelection : System.Web.UI.Page
     {
-
-        // Flight class to hold flight information
-        public class Flight
-        {
-            public string FlightNumber { get; set; }
-            public string DepartureTime { get; set; }
-            public string ArrivalTime { get; set; }
-            public string Duration { get; set; }
-            public string Price { get; set; }
-            public string Emissions { get; set; }
-            public string ECash { get; set; }
-            public string Deal { get; set; }
-        }
-
-        // Page load event
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Initialize the flight data
-                List<Flight> flights = new List<Flight>
-                {
-                    new Flight { FlightNumber = "IX-2784", DepartureTime = "20:55", ArrivalTime = "23:25", Duration = "2h 30m Non-Stop", Price = "₹3,596", Emissions = "164 Kg CO2", ECash = "₹250", Deal = "Get Flat 12% OFF on ICICI Bank Debit Cards. Use Code - YRICICIDC" },
-                    // Add more flight details as needed
-                };
-
-                // Bind the flight data to the repeater control
-                FlightRepeater.DataSource = flights;
-                FlightRepeater.DataBind();
+                BindConfirmedBookings();
             }
         }
 
-        protected void btnApplyCoupon_Click(object sender, EventArgs e)
+        private void BindConfirmedBookings()
         {
-            // Retrieve the entered coupon code
-            string couponCode = txtCouponCode.Text.Trim();
+            string connectionString = ConfigurationManager.ConnectionStrings["FlightBookingDB"].ConnectionString;
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM ConfirmedBookings";
 
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    gvConfirmedBookings.DataSource = dataTable;
+                    gvConfirmedBookings.DataBind();
+                }
+            }
         }
 
-       protected void btnConfirmBooking_Click(object sender, EventArgs e)
-{
-    // Retrieve the entered coupon code (if needed)
-    string couponCode = txtCouponCode.Text.Trim();
+        protected void gvConfirmedBookings_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "CancelBooking")
+            {
+                // Get the index of the row
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = gvConfirmedBookings.Rows[index];
 
-    // Perform booking confirmation logic here
-    // For example, save the booking to the database
+                // Get the BookingID from the row
+                string bookingID = row.Cells[0].Text;
 
-    // Register a JavaScript alert
-    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Your booking has been confirmed! Thank you.');", true);
-}
+                // Delete the booking
+                DeleteBooking(bookingID);
 
+                // Rebind the GridView
+                BindConfirmedBookings();
+            }
+        }
 
+        private void DeleteBooking(string bookingID)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["FlightBookingDB"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM ConfirmedBookings WHERE BookingID = @BookingID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@BookingID", bookingID);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

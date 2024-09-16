@@ -1,35 +1,40 @@
 ﻿using System;
-using System.Web.UI;
+using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace airplane
 {
-    public partial class Login : Page
+    public partial class Login : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                // Code that runs on initial page load
-            }
-        }
-
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            // Retrieve email and password values
             string email = Email.Text;
             string password = Password.Text;
 
-            // Example logic for user authentication
-            // Replace this with actual authentication logic, such as checking against a database
-            if (email == "test@example.com" && password == "password123")
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["FlightBookingDB"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                // Redirect to another page on successful login
-                Response.Redirect("Home.aspx");
-            }
-            else
-            {
-                // Show error message if login fails
-                Response.Write("<script>alert('Invalid email or password.');</script>");
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM Users WHERE Email = @Email AND Password = @Password";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.Parameters.AddWithValue("@Password", password); 
+
+                    int userCount = (int)cmd.ExecuteScalar();
+
+                    if (userCount > 0)
+                    {
+                        // Redirect to a dashboard or home page
+                        Response.Redirect("FlightBooking.aspx");
+                    }
+                    else
+                    {
+                        // Invalid credentials
+
+                    }
+                }
             }
         }
     }
