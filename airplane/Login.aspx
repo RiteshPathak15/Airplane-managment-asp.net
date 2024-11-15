@@ -93,7 +93,7 @@ background-size: cover;
                 <asp:LinkButton ID="ForgotPassword" runat="server" CssClass="forgot-password">Forgot password?</asp:LinkButton> <br/><br />
                 <asp:Button ID="LoginButton" runat="server" Text="Log In" OnClick="LoginButton_Click" CssClass="btn btn-primary" />
                 <div class="signup">
-                    Don't have an account? <asp:LinkButton ID="SignupLink" runat="server" PostBackUrl="~/Register.aspx" >Signup</asp:LinkButton>
+                    Don't have an account? <asp:LinkButton ID="SignupLink" runat="server" PostBackUrl="~/FlightBooking.aspx" >Signup</asp:LinkButton>
                 </div>
             </div>
         </div>
